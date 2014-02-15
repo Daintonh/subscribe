@@ -7,11 +7,15 @@ module Subscribe
     end
 
     def create
-      @account = Subscribe::Account.create(account_params)
-      env["warden"].set_user(@account.owner, :scope => :user)
-      env["warden"].set_user(@account, :scope => :account)
-      flash[:succes] = "Your account has been successfully created."
-      redirect_to subscribe.root_url
+      @account = Subscribe::Account.create_with_owner(account_params)
+      if @account.valid?
+        force_authentication!(account, account.owner)
+        flash[:succes] = "Your account has been successfully created."
+        redirect_to subscribe.root_url(:subdomain => @account.subdomain)
+      else
+        flash[:error] = "Sorry, your account could not be created."
+        render :new
+      end
     end
 
     private
