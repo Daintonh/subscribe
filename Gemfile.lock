@@ -4,6 +4,7 @@ PATH
     subscribe (0.0.1)
       bcrypt-ruby (= 3.1.2)
       dynamic_form (= 1.1.4)
+      houser (= 1.0.2)
       rails (~> 4.0.2)
       warden (= 1.2.3)
 
@@ -44,12 +45,15 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    database_cleaner (1.0.1)
     diff-lcs (1.2.5)
     dynamic_form (1.1.4)
     erubis (2.7.0)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
     hike (1.2.3)
+    houser (1.0.2)
+      rack
     i18n (0.6.9)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -117,6 +121,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (= 2.1.0)
+  database_cleaner (= 1.0.1)
   factory_girl (= 4.1.0)
   rspec-rails (= 2.14.0)
   sqlite3

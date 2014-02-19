@@ -1,6 +1,6 @@
 module Subscribe
   class Account < ActiveRecord::Base
-    EXCLUDED_SUBDOMAINS = %w(admin www)
+    EXCLUDED_SUBDOMAINS = %w(admin)
     belongs_to :owner, :class_name => "Subscribe::User"
     has_many :members, :class_name => "Subscribe::Member"
     has_many :users, :through => :members

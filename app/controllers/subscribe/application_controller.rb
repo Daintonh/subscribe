@@ -1,42 +1,4 @@
 module Subscribe
-  class ApplicationController < ActionController::Base
-
-    def current_account
-      if user_sign_in?
-        @current_account ||= begin
-          account_id = env["warden"].user(:scope => :account)
-          Subscribe::Account.find(account_id)
-        end
-      end
-    end
-    helper_method :current_account
-
-    def current_user
-      if user_signed_in?
-        @current_user ||= begin
-          user_id = env["warden"].user(:scope => :user)
-          Subscribe::User.find(user_id)
-        end
-      end
-    end
-    helper_method :current_user
-
-    def user_signed_in?
-      env["warden"].authenticated?(:user)
-    end
-    helper_method :user_signed_in?
-
-    def authenticate_user!
-      unless user_signed_in?
-        flash[:notice] = "Please sign in."
-        redirect_to "/sign_in"
-      end
-    end
-
-    def force_authentication!(account, user)
-      env["warden"].set_user(user.id, :scope => :user)
-      env["warden"].set_user(account.id, :scope => :account)
-    end
-
+  class ApplicationController < ::ApplicationController
   end
 end

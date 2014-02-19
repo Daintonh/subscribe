@@ -1,7 +1,9 @@
 require 'spec_helper'
+require "subscribe/testing_support/subdomain_helpers"
+require "subscribe/testing_support/factories/account_factory"
 
 feature 'User sign in' do
-  extend SubdomainHelpers
+  extend Subscribe::TestingSupport::SubdomainHelpers
   let!(:account) { FactoryGirl.create(:account) }
   let(:sign_in_url) { "http://#{account.subdomain}.example.com/sign_in" }
   let(:root_url) { "http://#{account.subdomain}.example.com/" }

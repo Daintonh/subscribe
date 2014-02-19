@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'factory_girl'
+require "database_cleaner"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -15,6 +16,7 @@ Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
+  config.include AuthenticationHelpers, :type => :feature
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -30,6 +32,18 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.before(:all) do
+    DatabaseCleaner.strategy = :truncation,
+        {:pre_count => true, :reset_ids => true}
+    DatabaseCleaner.clean_with(:truncation)
+  end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
